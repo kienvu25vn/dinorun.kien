@@ -1,3 +1,4 @@
+
 import pygame 
 import os
 import sys
@@ -27,9 +28,11 @@ clock = pygame.time.Clock()
 score_font = pygame.font.Font("Font.ttf",10)
 highscore_font = pygame.font.Font("Font.ttf",25)
 dino_start = pygame.transform.scale(pygame.image.load(os.path.join('image','rex5.png')),(50,50))
+button1 = pygame.transform.scale(pygame.image.load(os.path.join('image','start1.png')),(40,40))
+button2 = pygame.transform.scale(pygame.image.load(os.path.join('image','start2.png')),(40,40))
 
 class Dino():
-	def __init__(self,x,y,width,height,jump = False,islie = False,ispower = False):
+	def __init__(self,x,y,width,height,choice,jump = False,islie = False,ispower = False):
 		self.x = x 
 		self.y = y 
 		self.width = width 
@@ -41,7 +44,7 @@ class Dino():
 		self.jump_count = 8
 		self.islie = islie
 		self.ispower = ispower
-		self.choice = 1
+		self.choice = choice
 		self.hit = pygame.Rect(self.x,self.y,self.width,self.height)
 
 	def draw_dino(self,win):
@@ -139,7 +142,27 @@ class Bird():
 		self.hit = win.blit(pygame.transform.scale(self.bird,(self.width,self.height)),(self.x,self.y))
 
 
-
+class Item():
+	def __init__(self,x,y,choice,isappear=True):
+		self.x = x
+		self.y = y
+		self.isappear = isappear
+		self.hit = pygame.Rect(self.x,self.y,20,20)
+		self.choice = choice
+	def draw_item(self,win):
+		if self.isappear :
+		
+			self.hit=win.blit(item[self.choice],(self.x,self.y))
+		
+class bullet():
+	def __init__(self,x,y,width,height):
+		self.x = x
+		self.y = y
+		self.width = width
+		self.height = height
+		self.hit = pygame.Rect(self.x,self.y,self.width,self.height)
+	def draw_bullet(self,win):
+		pygame.draw.rect(win,(255,0,0),(self.x,self.y,self.width,self.height))
 
 def Score_text(x):
 	s = str(x)
@@ -166,7 +189,7 @@ def draw_win(score,x,y,islie):
 				running = False
 				pygame.quit()
 			if event.type == pygame.MOUSEBUTTONDOWN:
-				main()
+				pre_main()
 def draw_time_power(x,y,count,time):
 	
 	pygame.draw.rect(win,(255,0,0),(x,y,20,10))
@@ -175,34 +198,10 @@ def draw_time_power(x,y,count,time):
 
 
 
-
-class Item():
-	def __init__(self,x,y,isappear=True):
-		self.x = x
-		self.y = y
-		self.isappear = isappear
-		self.hit = pygame.Rect(self.x,self.y,20,20)
-		self.choice = 1
-	def draw_item(self,win):
-		if self.isappear :
-		
-			self.hit=win.blit(item[self.choice],(self.x,self.y))
-		
-class bullet():
-	def __init__(self,x,y,width,height):
-		self.x = x
-		self.y = y
-		self.width = width
-		self.height = height
-		self.hit = pygame.Rect(self.x,self.y,self.width,self.height)
-	def draw_bullet(self,win):
-		pygame.draw.rect(win,(255,0,0),(self.x,self.y,self.width,self.height))
-
-
 def main():
 	
 	run = True 
-	dino = Dino(50,220,50,50)
+	
 	tick = 0
 	tick1 = 0
 	istick = False
@@ -214,7 +213,8 @@ def main():
 	BIRD = Bird(900,240,40,25)
 	bird_x = 800
 	score = 0
-	ITEM = Item(750,220)
+	ITEM = Item(750,220,random.randrange(0,2))
+	dino = Dino(50,220,50,50,ITEM.choice)
 	x_score = 550
 	fb = open("highscore.txt",'r+')
 	high_score = int(fb.read().strip())
@@ -226,13 +226,11 @@ def main():
 		high_score_text = score_font.render("HI "+Score_text(high_score),1,(0,0,0))
 		clock.tick(15)
 		win.blit(bg,(X,Y))
-		
-		
 		win.blit(bg1,(X+600,Y))
 		win.blit(bg,(X+1200,Y))
 		score+=1
 		if score % 100 ==0:
-			vel +=1
+			vel +=2
 			pass_sound.play()
 
 		
@@ -336,7 +334,6 @@ def main():
 				ITEM.isappear = False
 			      
 			TREE.dot = random.randint(-1,1)
-			
 			TREE.numOftree = random.randint(1,3)
 			TREE.isfired = False
 			BIRD.isfired = False
@@ -349,5 +346,44 @@ def main():
 		win.blit(score_text,(600-score_text.get_width()-10,10))
 		win.blit(high_score_text,(600-score_text.get_width()-25 - high_score_text.get_width(),10))
 		pygame.display.update()
-main()
+def pre_main():
+	x=random.randint(0,100)
+	y=x
+	speedx=1
+	speedy=1
+	radius = 0
+	running = True
+	while running:
+		clock.tick(15)
+		win.blit(bg,(0,0))
+		win.blit(pygame.transform.rotate(dino_start,radius),(x,y))
+		BUT = win.blit(button1,(300 - button1.get_width()//2,150-button1.get_height()//2))
+		x+=speedx
+		y+=speedy
+		radius +=5
+		if x<=0 or x + dino_start.get_width()>=600:
+			speedx = - speedx
+		if y <= 0 or y + dino_start.get_height()>=300:
+			speedy = - speedy
+
+		for event in pygame.event.get():
+			if event.type == pygame.QUIT:
+				running= False
+
+			
+		if BUT.collidepoint(pygame.mouse.get_pos()):
+			BUT = win.blit(button2,(300 - button2.get_width()//2,150-button2.get_height()//2))
+			if pygame.mouse.get_pressed()[0]:
+				main()
+
+
+
+
+		pygame.display.update()
+
+
+
+
+
+pre_main()
 
