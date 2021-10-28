@@ -1,4 +1,3 @@
-
 import pygame 
 import os
 import sys
@@ -10,8 +9,8 @@ pygame.mixer.init()
 win = pygame.display.set_mode((600,300))
 jump_sound = pygame.mixer.Sound(os.path.join('music','tick.wav'))
 pass_sound = pygame.mixer.Sound(os.path.join('music','te.wav'))
-dead_sound = pygame.mixer.Sound(os.path.join('music','death.mp3'))
-lazer_sound = pygame.mixer.Sound(os.path.join('music','laze.mp3'))
+dead_sound = pygame.mixer.Sound(os.path.join('music','te.wav'))
+lazer_sound = pygame.mixer.Sound(os.path.join('music','te.wav'))
 # bg = pygame.image.load(os.path.join('image','background.jpg'))
 bg1 = pygame.image.load(os.path.join('image','background.jpg'))
 guide_bg = pygame.image.load(os.path.join('image','guide_bg.jpg'))
@@ -327,7 +326,7 @@ def main():
 			if event.type == pygame.KEYUP:
 				if event.key == pygame.K_DOWN:
 					dino.islie = False
-				if event.key == pygame.K_f:
+				if event.key == pygame.K_f or not dino.ispower:
 					fire = False
 		
 
@@ -338,9 +337,6 @@ def main():
 				TREE.isfired = True
 			if  weapon.hit.colliderect(BIRD.hit):
 				BIRD.isfired = True
-
-
-
 
 		
 		TREE.draw_tree(win)
