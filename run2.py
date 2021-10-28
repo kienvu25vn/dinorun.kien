@@ -4,6 +4,8 @@ import os
 import sys
 import random
 from background import back_ground
+from item import Item
+from Bullet import bullet
 pygame.init()
 pygame.font.init()
 pygame.mixer.init()
@@ -27,7 +29,7 @@ dino_lie = [pygame.image.load(os.path.join('image','rexlie1.png')),pygame.image.
 dino_lie_night = [pygame.image.load(os.path.join('image','a1.png')),pygame.image.load(os.path.join('image','a2.png'))]
 dino_power_lie = [pygame.image.load(os.path.join('image','dino_power_lie1.png')),pygame.image.load(os.path.join('image','dino_power_lie2.png'))]
 dino_power = [pygame.image.load(os.path.join('image','dino_power1.png')),pygame.image.load(os.path.join('image','dino_power2.png')),pygame.image.load(os.path.join('image','dino_power3.png')),pygame.image.load(os.path.join('image','dino_power4.png'))]
-item = [pygame.transform.scale(pygame.image.load(os.path.join('image','collect.png')),(20,20)),pygame.transform.scale(pygame.image.load(os.path.join('image','gun.png')),(25,15))]
+# item = [pygame.transform.scale(pygame.image.load(os.path.join('image','collect.png')),(20,20)),pygame.transform.scale(pygame.image.load(os.path.join('image','gun.png')),(25,15))]
 dino_gun = [pygame.image.load(os.path.join('image','dino_gun1.png')),pygame.image.load(os.path.join('image','dino_gun2.png')),pygame.image.load(os.path.join('image','dino_gun3.png')),pygame.image.load(os.path.join('image','dino_gun4.png'))]
 dino_gun_night = [pygame.image.load(os.path.join('image','dino_gun1_night.png')),pygame.image.load(os.path.join('image','dino_gun2_night.png')),pygame.image.load(os.path.join('image','dino_gun3_night.png')),pygame.image.load(os.path.join('image','dino_gun4_night.png'))]
 
@@ -172,27 +174,27 @@ class Bird():
 		self.hit = win.blit(pygame.transform.scale(self.bird,(self.width,self.height)),(self.x,self.y))
 
 
-class Item():
-	def __init__(self,x,y,choice,isappear=True):
-		self.x = x
-		self.y = y
-		self.isappear = isappear
-		self.hit = pygame.Rect(self.x,self.y,20,20)
-		self.choice = choice
-	def draw_item(self,win):
-		if self.isappear :
+# class Item():
+# 	def __init__(self,x,y,choice,isappear=True):
+# 		self.x = x
+# 		self.y = y
+# 		self.isappear = isappear
+# 		self.hit = pygame.Rect(self.x,self.y,20,20)
+# 		self.choice = choice
+# 	def draw_item(self,win):
+# 		if self.isappear :
 		
-			self.hit=win.blit(item[self.choice],(self.x,self.y))
+# 			self.hit=win.blit(item[self.choice],(self.x,self.y))
 		
-class bullet():
-	def __init__(self,x,y,width,height):
-		self.x = x
-		self.y = y
-		self.width = width
-		self.height = height
-		self.hit = pygame.Rect(self.x,self.y,self.width,self.height)
-	def draw_bullet(self,win):
-		pygame.draw.rect(win,(255,0,0),(self.x,self.y,self.width,self.height))
+# class bullet():
+# 	def __init__(self,x,y,width,height):
+# 		self.x = x
+# 		self.y = y
+# 		self.width = width
+# 		self.height = height
+# 		self.hit = pygame.Rect(self.x,self.y,self.width,self.height)
+# 	def draw_bullet(self,win):
+# 		pygame.draw.rect(win,(255,0,0),(self.x,self.y,self.width,self.height))
 # class back_ground():
 # 	def __init__(self,x,y,isnight = False):
 # 		self.x = x
