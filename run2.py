@@ -329,7 +329,9 @@ def main():
 			if event.type == pygame.KEYUP:
 				if event.key == pygame.K_DOWN:
 					dino.islie = False
-				if event.key == pygame.K_f or not dino.ispower:
+				if event.key == pygame.K_f:
+					fire = False
+				if not dino.ispower:
 					fire = False
 		
 
