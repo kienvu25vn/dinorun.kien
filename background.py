@@ -1,4 +1,4 @@
-
+import pygame
 import os
 bg = pygame.image.load(os.path.join('image','background.jpg'))
 night_bg = pygame.image.load(os.path.join('image','night_bg.png'))
