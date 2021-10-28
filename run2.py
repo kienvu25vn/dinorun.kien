@@ -3,6 +3,8 @@ import os
 import sys
 import random
 from background import back_ground
+from tree import Tree
+
 pygame.init()
 pygame.font.init()
 pygame.mixer.init()
@@ -15,8 +17,8 @@ lazer_sound = pygame.mixer.Sound(os.path.join('music','te.wav'))
 bg1 = pygame.image.load(os.path.join('image','background.jpg'))
 guide_bg = pygame.image.load(os.path.join('image','guide_bg.jpg'))
 # night_bg = pygame.image.load(os.path.join('image','night_bg.png'))
-tree = pygame.image.load(os.path.join('image','tree.png'))
-tree_night = pygame.image.load(os.path.join('image','tree_night.png'))
+# tree = pygame.image.load(os.path.join('image','tree.png'))
+# tree_night = pygame.image.load(os.path.join('image','tree_night.png'))
 tree_cut = pygame.image.load(os.path.join('image','tree1.png'))
 bird = pygame.image.load(os.path.join('image','bird.png'))
 bird_cut = pygame.image.load(os.path.join('image','bird_cut.png'))
@@ -39,6 +41,7 @@ dino_start_night = pygame.transform.scale(pygame.image.load(os.path.join('image'
 button1 = pygame.transform.scale(pygame.image.load(os.path.join('image','play_button.png')),(40,40))
 button2 = pygame.transform.scale(pygame.image.load(os.path.join('image','guide_button.png')),(40,40))
 back_button = pygame.transform.scale(pygame.image.load(os.path.join('image','button_back.png')),(40,40))
+
 class Dino():
 	def __init__(self,x,y,width,height,choice,jump = False,islie = False,ispower = False,isnight= False):
 		self.x = x 
@@ -121,36 +124,36 @@ class Dino():
 
 		
 
-class Tree():
-	def __init__(self,x,y,width,height,numOftree,isfired=False,isnight = False):
-		self.x = x 
-		self.y = y 
-		self.width = width
-		self.height = height 
-		self.numOftree = numOftree
-		self.dot = 1
-		self.hitbox = (self.x,self.y,self.width,self.height)
-		self.hit = pygame.Rect(self.x,self.y,self.width,self.height)
-		self.tree = tree
-		self.isfired = isfired
-		self.isnight = isnight
-	def draw_tree(self,win):
-		if not self.isfired:
-			if not self.isnight:
-				self.tree = tree
-			else:
-				self.tree = tree_night
-		else:
-			self.tree = tree_cut
-		for i in range(self.numOftree):
-			if i %2 !=0 :
+# class Tree():
+# 	def __init__(self,x,y,width,height,numOftree,isfired=False,isnight = False):
+# 		self.x = x 
+# 		self.y = y 
+# 		self.width = width
+# 		self.height = height 
+# 		self.numOftree = numOftree
+# 		self.dot = 1
+# 		self.hitbox = (self.x,self.y,self.width,self.height)
+# 		self.hit = pygame.Rect(self.x,self.y,self.width,self.height)
+# 		self.tree = tree
+# 		self.isfired = isfired
+# 		self.isnight = isnight
+# 	def draw_tree(self,win):
+# 		if not self.isfired:
+# 			if not self.isnight:
+# 				self.tree = tree
+# 			else:
+# 				self.tree = tree_night
+# 		else:
+# 			self.tree = tree_cut
+# 		for i in range(self.numOftree):
+# 			if i %2 !=0 :
 
-				self.hit = win.blit(pygame.transform.scale(self.tree,(self.width,self.height + i*10*self.dot)),(self.x + (i+1)*25,self.y - i*10*self.dot))
-				self.hitbox = (self.x + (i+1)*25,self.y-10*i*self.dot,self.width,self.height + i*10*self.dot)
+# 				self.hit = win.blit(pygame.transform.scale(self.tree,(self.width,self.height + i*10*self.dot)),(self.x + (i+1)*25,self.y - i*10*self.dot))
+# 				self.hitbox = (self.x + (i+1)*25,self.y-10*i*self.dot,self.width,self.height + i*10*self.dot)
 				
-			else:
-				self.hit = win.blit(pygame.transform.scale(self.tree,(self.width,self.height )),(self.x  + (i+1)*25,self.y ))
-				self.hitbox = (self.x +(i+1)*25,self.y,self.width,self.height)
+# 			else:
+# 				self.hit = win.blit(pygame.transform.scale(self.tree,(self.width,self.height )),(self.x  + (i+1)*25,self.y ))
+# 				self.hitbox = (self.x +(i+1)*25,self.y,self.width,self.height)
 				
 
 
@@ -326,8 +329,10 @@ def main():
 			if event.type == pygame.KEYUP:
 				if event.key == pygame.K_DOWN:
 					dino.islie = False
-				if event.key == pygame.K_f or not dino.ispower:
+				if event.key == pygame.K_f:
 					fire = False
+			if not dino.ispower:
+				fire = False
 		
 
 		if fire:
