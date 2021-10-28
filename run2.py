@@ -14,25 +14,34 @@ dead_sound = pygame.mixer.Sound(os.path.join('music','death.mp3'))
 lazer_sound = pygame.mixer.Sound(os.path.join('music','laze.mp3'))
 bg = pygame.image.load(os.path.join('image','background.jpg'))
 bg1 = pygame.image.load(os.path.join('image','background.jpg'))
+guide_bg = pygame.image.load(os.path.join('image','guide_bg.jpg'))
+night_bg = pygame.image.load(os.path.join('image','night_bg.png'))
 tree = pygame.image.load(os.path.join('image','tree.png'))
+tree_night = pygame.image.load(os.path.join('image','tree_night.png'))
 tree_cut = pygame.image.load(os.path.join('image','tree1.png'))
 bird = pygame.image.load(os.path.join('image','bird.png'))
 bird_cut = pygame.image.load(os.path.join('image','bird_cut.png'))
 DINO = [pygame.image.load(os.path.join('image','rex1.png')),pygame.image.load(os.path.join('image','rex2.png')),pygame.image.load(os.path.join('image','rex3.png')),pygame.image.load(os.path.join('image','rex4.png'))]
+DINO_NIGHT = [pygame.image.load(os.path.join('image','b1.png')),pygame.image.load(os.path.join('image','b2.png')),pygame.image.load(os.path.join('image','b3.png')),pygame.image.load(os.path.join('image','b4.png'))]
 dino_lie = [pygame.image.load(os.path.join('image','rexlie1.png')),pygame.image.load(os.path.join('image','rexlie2.png'))]
+dino_lie_night = [pygame.image.load(os.path.join('image','a1.png')),pygame.image.load(os.path.join('image','a2.png'))]
 dino_power_lie = [pygame.image.load(os.path.join('image','dino_power_lie1.png')),pygame.image.load(os.path.join('image','dino_power_lie2.png'))]
 dino_power = [pygame.image.load(os.path.join('image','dino_power1.png')),pygame.image.load(os.path.join('image','dino_power2.png')),pygame.image.load(os.path.join('image','dino_power3.png')),pygame.image.load(os.path.join('image','dino_power4.png'))]
 item = [pygame.transform.scale(pygame.image.load(os.path.join('image','collect.png')),(20,20)),pygame.transform.scale(pygame.image.load(os.path.join('image','gun.png')),(25,15))]
 dino_gun = [pygame.image.load(os.path.join('image','dino_gun1.png')),pygame.image.load(os.path.join('image','dino_gun2.png')),pygame.image.load(os.path.join('image','dino_gun3.png')),pygame.image.load(os.path.join('image','dino_gun4.png'))]
+dino_gun_night = [pygame.image.load(os.path.join('image','dino_gun1_night.png')),pygame.image.load(os.path.join('image','dino_gun2_night.png')),pygame.image.load(os.path.join('image','dino_gun3_night.png')),pygame.image.load(os.path.join('image','dino_gun4_night.png'))]
+
 clock = pygame.time.Clock()
 score_font = pygame.font.Font("Font.ttf",10)
 highscore_font = pygame.font.Font("Font.ttf",25)
+text_guide = pygame.font.Font("Font.ttf",6)
 dino_start = pygame.transform.scale(pygame.image.load(os.path.join('image','rex5.png')),(50,50))
-button1 = pygame.transform.scale(pygame.image.load(os.path.join('image','start1.png')),(40,40))
-button2 = pygame.transform.scale(pygame.image.load(os.path.join('image','start2.png')),(40,40))
-
+dino_start_night = pygame.transform.scale(pygame.image.load(os.path.join('image','b5.png')),(50,50))
+button1 = pygame.transform.scale(pygame.image.load(os.path.join('image','play_button.png')),(40,40))
+button2 = pygame.transform.scale(pygame.image.load(os.path.join('image','guide_button.png')),(40,40))
+back_button = pygame.transform.scale(pygame.image.load(os.path.join('image','button_back.png')),(40,40))
 class Dino():
-	def __init__(self,x,y,width,height,choice,jump = False,islie = False,ispower = False):
+	def __init__(self,x,y,width,height,choice,jump = False,islie = False,ispower = False,isnight= False):
 		self.x = x 
 		self.y = y 
 		self.width = width 
@@ -45,6 +54,10 @@ class Dino():
 		self.islie = islie
 		self.ispower = ispower
 		self.choice = choice
+		self.isnight = isnight
+		self.dino = DINO
+		self.dino_lie = dino_lie
+		self.dino_gun = dino_gun
 		self.hit = pygame.Rect(self.x,self.y,self.width,self.height)
 
 	def draw_dino(self,win):
@@ -58,11 +71,15 @@ class Dino():
 				self.jump_count = 8
 				self.jump = False
 		if not self.islie:
+			if not self.isnight:
+				self.dino = DINO
+			else:
+				self.dino = DINO_NIGHT
 			if not self.ispower:
 				if self.walk_count + 1 >=4:
 					self.walk_count = 0
-				self.hit = win.blit(pygame.transform.scale(DINO[self.walk_count],(self.width,self.height)),(self.x,self.y+5))
-				self.dino_rect = DINO[self.walk_count].get_rect()
+				self.hit = win.blit(pygame.transform.scale(self.dino[self.walk_count],(self.width,self.height)),(self.x,self.y+5))
+				self.dino_rect = self.dino[self.walk_count].get_rect()
 				self.walk_count +=1
 			else:
 				if self.choice == 0:
@@ -72,19 +89,28 @@ class Dino():
 					self.hit = win.blit(pygame.transform.scale(dino_power[self.walk_count],(self.width,self.height)),(self.x,self.y+5))
 					self.walk_count +=1
 				else:
+					if not self.isnight:
+						self.dino_gun = dino_gun
+					else:
+						self.dino_gun = dino_gun_night
+
 					if self.walk_count + 1 >=4:
 						self.walk_count = 0
-					self.hit = win.blit(pygame.transform.scale(dino_gun[self.walk_count],(self.width + 13,self.height)),(self.x,self.y+5))
+					self.hit = win.blit(pygame.transform.scale(self.dino_gun[self.walk_count],(self.width + 13,self.height)),(self.x,self.y+5))
 					self.walk_count +=1
 
 
 
 		else:
+			if not self.isnight:
+				self.dino_lie = dino_lie
+			else:
+				self.dino_lie = dino_lie_night
 			if not self.ispower:
 				if self.walk_lie + 1 >2:
 					self.walk_lie = 0
-				self.hit = win.blit(pygame.transform.scale(dino_lie[self.walk_lie],(50,35)),(self.x,self.y+20))
-				self.dino_rect = dino_lie[self.walk_lie].get_rect
+				self.hit = win.blit(pygame.transform.scale(self.dino_lie[self.walk_lie],(50,35)),(self.x,self.y+20))
+				self.dino_rect = self.dino_lie[self.walk_lie].get_rect
 				self.walk_lie +=1
 			else:
 				if self.walk_lie + 1 >2:
@@ -97,7 +123,7 @@ class Dino():
 		
 
 class Tree():
-	def __init__(self,x,y,width,height,numOftree,isfired=False):
+	def __init__(self,x,y,width,height,numOftree,isfired=False,isnight = False):
 		self.x = x 
 		self.y = y 
 		self.width = width
@@ -108,9 +134,13 @@ class Tree():
 		self.hit = pygame.Rect(self.x,self.y,self.width,self.height)
 		self.tree = tree
 		self.isfired = isfired
+		self.isnight = isnight
 	def draw_tree(self,win):
 		if not self.isfired:
-			self.tree = tree
+			if not self.isnight:
+				self.tree = tree
+			else:
+				self.tree = tree_night
 		else:
 			self.tree = tree_cut
 		for i in range(self.numOftree):
@@ -163,7 +193,18 @@ class bullet():
 		self.hit = pygame.Rect(self.x,self.y,self.width,self.height)
 	def draw_bullet(self,win):
 		pygame.draw.rect(win,(255,0,0),(self.x,self.y,self.width,self.height))
-
+class back_ground():
+	def __init__(self,x,y,isnight = False):
+		self.x = x
+		self.y = y
+		self.isnight = isnight
+		self.bg = bg
+	def draw_bg(self,win):
+		if not self.isnight:
+			self.bg = bg
+		else:
+			self.bg = night_bg
+		win.blit(self.bg,(self.x,self.y))
 def Score_text(x):
 	s = str(x)
 	while(len(s)<5):
@@ -171,11 +212,17 @@ def Score_text(x):
 	return s	
 
 
-def draw_win(score,x,y,islie):
-	high_score = highscore_font.render("GameOver" ,1,(0,0,0))
+def draw_win(score,x,y,islie,isnight):
+	if not isnight:
+		high_score = highscore_font.render("GameOver" ,1,(0,0,0))
+	else:
+		high_score = highscore_font.render("GameOver" ,1,(255,255,255))
 	win.blit(high_score,((600- high_score.get_width())//2,(300-high_score.get_height())//2))
 	if not islie:
-		win.blit(pygame.transform.scale(dino_start,(50,50)),(x,y))
+		if not isnight:
+			win.blit(pygame.transform.scale(dino_start,(50,50)),(x,y))
+		else:
+			win.blit(pygame.transform.scale(dino_start_night,(50,50)),(x,y))
 	pygame.display.update()
 
 	running = True
@@ -188,8 +235,11 @@ def draw_win(score,x,y,islie):
 				fb.close()
 				running = False
 				pygame.quit()
-			if event.type == pygame.MOUSEBUTTONDOWN:
+				sys.exit()
+		if pygame.mouse.get_pressed()[2]:
 				pre_main()
+		if pygame.mouse.get_pressed()[0]:
+				main()
 def draw_time_power(x,y,count,time):
 	
 	pygame.draw.rect(win,(255,0,0),(x,y,20,10))
@@ -201,14 +251,13 @@ def draw_time_power(x,y,count,time):
 def main():
 	
 	run = True 
-	
 	tick = 0
-	tick1 = 0
 	istick = False
 	count = 0
-	X = 0
-	Y = 0
 	vel = 10
+	BG1 = back_ground(0,0)
+	BG2 = back_ground(600,0)
+	BG3 = back_ground(1200,0)
 	TREE = Tree(600,230,20,40,2)
 	BIRD = Bird(900,240,40,25)
 	bird_x = 800
@@ -222,16 +271,35 @@ def main():
 	fire = False
 
 	while run:
-		score_text = score_font.render(Score_text(score),1,(0,0,0))
-		high_score_text = score_font.render("HI "+Score_text(high_score),1,(0,0,0))
+		if not dino.isnight:
+			score_text = score_font.render(Score_text(score),1,(0,0,0))
+			high_score_text = score_font.render("HI "+Score_text(high_score),1,(0,0,0))
+		else:
+			score_text = score_font.render(Score_text(score),1,(255,255,255))
+			high_score_text = score_font.render("HI "+Score_text(high_score),1,(255,255,255))
 		clock.tick(15)
-		win.blit(bg,(X,Y))
-		win.blit(bg1,(X+600,Y))
-		win.blit(bg,(X+1200,Y))
+		
+		BG2.x = BG1.x + 600
+		BG3.x = BG1.x + 1200
+		BG1.draw_bg(win)
+		BG2.draw_bg(win)
+		BG3.draw_bg(win)
 		score+=1
 		if score % 100 ==0:
-			vel +=2
+			vel+=1
 			pass_sound.play()
+		if score %500 ==0 and (score//500)%2==1:
+			BG1.isnight = True
+			BG2.isnight = True
+			BG3.isnight = True
+			dino.isnight = True
+			TREE.isnight = True
+		if score %500 ==0 and (score//500)%2==0:
+			BG1.isnight = False
+			BG2.isnight = False
+			BG3.isnight = False
+			dino.isnight = False
+			TREE.isnight = False
 
 		
 		
@@ -242,6 +310,7 @@ def main():
 				fb.close()
 				run= False
 				pygame.quit()
+				sys.exit()
 			if event.type == pygame.KEYDOWN:
 				if event.key == pygame.K_SPACE:
 					jump_sound.play()
@@ -279,7 +348,7 @@ def main():
 		ITEM.draw_item(win)
 		dino.draw_dino(win)
 		
-		if (dino.hit.colliderect(TREE.hit) or dino.hit.colliderect(BIRD.hit)) and not dino.ispower:
+		if (dino.hit.colliderect(TREE.hit) or dino.hit.colliderect(BIRD.hit)) and not dino.ispower  and not TREE.isfired and not BIRD.isfired:
 			dead_sound.play()
 			if high_score < score:
 				high_score = score
@@ -288,7 +357,7 @@ def main():
 			fb.close()
 
 
-			draw_win(score,dino.x,dino.y+5,dino.islie)
+			draw_win(score,dino.x,dino.y+5,dino.islie,BG1.isnight)
 		if istick :
 
 			tick+=1
@@ -311,14 +380,15 @@ def main():
 			
 			
 		
-		if X <=-(bird_x + BIRD.width):
+		if BG1.x <= -(bird_x + BIRD.width):
 			
-			X=0
+			BG1.x=0
 			TREE.x = 600
 			BIRD.x = random.randrange(800,900)
 			BIRD.y = random.randrange(190,240)
 			bird_x = BIRD.x
-			ITEM.x = 750
+			ITEM.x = random.randrange(710,760)
+			ITEM.y = random.randrange(150,220)
 			isappear = random.randrange(1,3)
 			
 			if isappear == 1 and not istick :
@@ -339,16 +409,17 @@ def main():
 			BIRD.isfired = False
 			
 		
-		X-=vel
+		BG1.x-=vel
 		TREE.x -=vel
 		BIRD.x -=vel
 		ITEM.x -= vel
 		win.blit(score_text,(600-score_text.get_width()-10,10))
-		win.blit(high_score_text,(600-score_text.get_width()-25 - high_score_text.get_width(),10))
+		if high_score > 0:
+			win.blit(high_score_text,(600-score_text.get_width()-25 - high_score_text.get_width(),10))
 		pygame.display.update()
 def pre_main():
 	x=random.randint(0,100)
-	y=x
+	y=0
 	speedx=1
 	speedy=1
 	radius = 0
@@ -357,7 +428,8 @@ def pre_main():
 		clock.tick(15)
 		win.blit(bg,(0,0))
 		win.blit(pygame.transform.rotate(dino_start,radius),(x,y))
-		BUT = win.blit(button1,(300 - button1.get_width()//2,150-button1.get_height()//2))
+		BUT = win.blit(button1,(300 - button1.get_width()-5,150-button1.get_height()//2))
+		Guide_but = win.blit(button2,(305 ,150 - button2.get_height()//2))
 		x+=speedx
 		y+=speedy
 		radius +=5
@@ -369,12 +441,18 @@ def pre_main():
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
 				running= False
+				pygame.quit()
+				sys.exit()
 
 			
 		if BUT.collidepoint(pygame.mouse.get_pos()):
-			BUT = win.blit(button2,(300 - button2.get_width()//2,150-button2.get_height()//2))
+			
 			if pygame.mouse.get_pressed()[0]:
 				main()
+		if Guide_but.collidepoint(pygame.mouse.get_pos()):
+			
+			if pygame.mouse.get_pressed()[0]:
+				guide_main()
 
 
 
@@ -382,6 +460,21 @@ def pre_main():
 		pygame.display.update()
 
 
+def guide_main():
+	run = True
+	while run:
+		win.blit(guide_bg,(0,0))
+		back_but = win.blit(back_button,(600-back_button.get_width()-10,10))
+		for event in pygame.event.get():
+			if event.type == pygame.QUIT:
+				run = False
+				pygame.quit()
+				sys.exit()
+		if back_but.collidepoint(pygame.mouse.get_pos()):
+			
+			if pygame.mouse.get_pressed()[0]:
+				pre_main()
+		pygame.display.update()
 
 
 
