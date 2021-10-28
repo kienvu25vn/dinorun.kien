@@ -3,7 +3,7 @@ import pygame
 import os
 import sys
 import random
-
+from background import back_ground
 pygame.init()
 pygame.font.init()
 pygame.mixer.init()
@@ -12,10 +12,10 @@ jump_sound = pygame.mixer.Sound(os.path.join('music','tick.wav'))
 pass_sound = pygame.mixer.Sound(os.path.join('music','te.wav'))
 dead_sound = pygame.mixer.Sound(os.path.join('music','death.mp3'))
 lazer_sound = pygame.mixer.Sound(os.path.join('music','laze.mp3'))
-bg = pygame.image.load(os.path.join('image','background.jpg'))
+# bg = pygame.image.load(os.path.join('image','background.jpg'))
 bg1 = pygame.image.load(os.path.join('image','background.jpg'))
 guide_bg = pygame.image.load(os.path.join('image','guide_bg.jpg'))
-night_bg = pygame.image.load(os.path.join('image','night_bg.png'))
+# night_bg = pygame.image.load(os.path.join('image','night_bg.png'))
 tree = pygame.image.load(os.path.join('image','tree.png'))
 tree_night = pygame.image.load(os.path.join('image','tree_night.png'))
 tree_cut = pygame.image.load(os.path.join('image','tree1.png'))
@@ -193,18 +193,18 @@ class bullet():
 		self.hit = pygame.Rect(self.x,self.y,self.width,self.height)
 	def draw_bullet(self,win):
 		pygame.draw.rect(win,(255,0,0),(self.x,self.y,self.width,self.height))
-class back_ground():
-	def __init__(self,x,y,isnight = False):
-		self.x = x
-		self.y = y
-		self.isnight = isnight
-		self.bg = bg
-	def draw_bg(self,win):
-		if not self.isnight:
-			self.bg = bg
-		else:
-			self.bg = night_bg
-		win.blit(self.bg,(self.x,self.y))
+# class back_ground():
+# 	def __init__(self,x,y,isnight = False):
+# 		self.x = x
+# 		self.y = y
+# 		self.isnight = isnight
+# 		self.bg = bg
+# 	def draw_bg(self,win):
+# 		if not self.isnight:
+# 			self.bg = bg
+# 		else:
+# 			self.bg = night_bg
+# 		win.blit(self.bg,(self.x,self.y))
 def Score_text(x):
 	s = str(x)
 	while(len(s)<5):
@@ -424,9 +424,10 @@ def pre_main():
 	speedy=1
 	radius = 0
 	running = True
+	BG1 = back_ground(0,0)
 	while running:
 		clock.tick(15)
-		win.blit(bg,(0,0))
+		BG1.draw_bg(win)
 		win.blit(pygame.transform.rotate(dino_start,radius),(x,y))
 		BUT = win.blit(button1,(300 - button1.get_width()-5,150-button1.get_height()//2))
 		Guide_but = win.blit(button2,(305 ,150 - button2.get_height()//2))
