@@ -7,9 +7,13 @@ from background import back_ground
 from item import Item
 from Bullet import bullet
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 from Dino import Dino
 from tree import Tree
 
+=======
+from bird import Bird
+>>>>>>> Stashed changes
 =======
 from bird import Bird
 >>>>>>> Stashed changes
@@ -29,6 +33,7 @@ guide_bg = pygame.image.load(os.path.join('image','guide_bg.jpg'))
 # tree_night = pygame.image.load(os.path.join('image','tree_night.png'))
 tree_cut = pygame.image.load(os.path.join('image','tree1.png'))
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 bird = pygame.image.load(os.path.join('image','bird.png'))
 bird_cut = pygame.image.load(os.path.join('image','bird_cut.png'))
 # DINO = [pygame.image.load(os.path.join('image','rex1.png')),pygame.image.load(os.path.join('image','rex2.png')),pygame.image.load(os.path.join('image','rex3.png')),pygame.image.load(os.path.join('image','rex4.png'))]
@@ -38,6 +43,8 @@ bird_cut = pygame.image.load(os.path.join('image','bird_cut.png'))
 # dino_power_lie = [pygame.image.load(os.path.join('image','dino_power_lie1.png')),pygame.image.load(os.path.join('image','dino_power_lie2.png'))]
 # dino_power = [pygame.image.load(os.path.join('image','dino_power1.png')),pygame.image.load(os.path.join('image','dino_power2.png')),pygame.image.load(os.path.join('image','dino_power3.png')),pygame.image.load(os.path.join('image','dino_power4.png'))]
 =======
+=======
+>>>>>>> Stashed changes
 # bird = pygame.image.load(os.path.join('image','bird.png'))
 # bird_cut = pygame.image.load(os.path.join('image','bird_cut.png'))
 DINO = [pygame.image.load(os.path.join('image','rex1.png')),pygame.image.load(os.path.join('image','rex2.png')),pygame.image.load(os.path.join('image','rex3.png')),pygame.image.load(os.path.join('image','rex4.png'))]
