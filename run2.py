@@ -6,17 +6,7 @@ import random
 from background import back_ground
 from item import Item
 from Bullet import bullet
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
 from Dino import Dino
-from tree import Tree
-
-=======
-from bird import Bird
->>>>>>> Stashed changes
-=======
-from bird import Bird
->>>>>>> Stashed changes
 pygame.init()
 pygame.font.init()
 pygame.mixer.init()
@@ -28,12 +18,10 @@ lazer_sound = pygame.mixer.Sound(os.path.join('music','laze.mp3'))
 # bg = pygame.image.load(os.path.join('image','background.jpg'))
 bg1 = pygame.image.load(os.path.join('image','background.jpg'))
 guide_bg = pygame.image.load(os.path.join('image','guide_bg.jpg'))
-# # night_bg = pygame.image.load(os.path.join('image','night_bg.png'))
-# tree = pygame.image.load(os.path.join('image','tree.png'))
-# tree_night = pygame.image.load(os.path.join('image','tree_night.png'))
+# night_bg = pygame.image.load(os.path.join('image','night_bg.png'))
+tree = pygame.image.load(os.path.join('image','tree.png'))
+tree_night = pygame.image.load(os.path.join('image','tree_night.png'))
 tree_cut = pygame.image.load(os.path.join('image','tree1.png'))
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
 bird = pygame.image.load(os.path.join('image','bird.png'))
 bird_cut = pygame.image.load(os.path.join('image','bird_cut.png'))
 # DINO = [pygame.image.load(os.path.join('image','rex1.png')),pygame.image.load(os.path.join('image','rex2.png')),pygame.image.load(os.path.join('image','rex3.png')),pygame.image.load(os.path.join('image','rex4.png'))]
@@ -42,18 +30,6 @@ bird_cut = pygame.image.load(os.path.join('image','bird_cut.png'))
 # dino_lie_night = [pygame.image.load(os.path.join('image','a1.png')),pygame.image.load(os.path.join('image','a2.png'))]
 # dino_power_lie = [pygame.image.load(os.path.join('image','dino_power_lie1.png')),pygame.image.load(os.path.join('image','dino_power_lie2.png'))]
 # dino_power = [pygame.image.load(os.path.join('image','dino_power1.png')),pygame.image.load(os.path.join('image','dino_power2.png')),pygame.image.load(os.path.join('image','dino_power3.png')),pygame.image.load(os.path.join('image','dino_power4.png'))]
-=======
-=======
->>>>>>> Stashed changes
-# bird = pygame.image.load(os.path.join('image','bird.png'))
-# bird_cut = pygame.image.load(os.path.join('image','bird_cut.png'))
-DINO = [pygame.image.load(os.path.join('image','rex1.png')),pygame.image.load(os.path.join('image','rex2.png')),pygame.image.load(os.path.join('image','rex3.png')),pygame.image.load(os.path.join('image','rex4.png'))]
-DINO_NIGHT = [pygame.image.load(os.path.join('image','b1.png')),pygame.image.load(os.path.join('image','b2.png')),pygame.image.load(os.path.join('image','b3.png')),pygame.image.load(os.path.join('image','b4.png'))]
-dino_lie = [pygame.image.load(os.path.join('image','rexlie1.png')),pygame.image.load(os.path.join('image','rexlie2.png'))]
-dino_lie_night = [pygame.image.load(os.path.join('image','a1.png')),pygame.image.load(os.path.join('image','a2.png'))]
-dino_power_lie = [pygame.image.load(os.path.join('image','dino_power_lie1.png')),pygame.image.load(os.path.join('image','dino_power_lie2.png'))]
-dino_power = [pygame.image.load(os.path.join('image','dino_power1.png')),pygame.image.load(os.path.join('image','dino_power2.png')),pygame.image.load(os.path.join('image','dino_power3.png')),pygame.image.load(os.path.join('image','dino_power4.png'))]
->>>>>>> Stashed changes
 # item = [pygame.transform.scale(pygame.image.load(os.path.join('image','collect.png')),(20,20)),pygame.transform.scale(pygame.image.load(os.path.join('image','gun.png')),(25,15))]
 # dino_gun = [pygame.image.load(os.path.join('image','dino_gun1.png')),pygame.image.load(os.path.join('image','dino_gun2.png')),pygame.image.load(os.path.join('image','dino_gun3.png')),pygame.image.load(os.path.join('image','dino_gun4.png'))]
 # dino_gun_night = [pygame.image.load(os.path.join('image','dino_gun1_night.png')),pygame.image.load(os.path.join('image','dino_gun2_night.png')),pygame.image.load(os.path.join('image','dino_gun3_night.png')),pygame.image.load(os.path.join('image','dino_gun4_night.png'))]
@@ -149,54 +125,54 @@ back_button = pygame.transform.scale(pygame.image.load(os.path.join('image','but
 
 		
 
-# class Tree():
-# 	def __init__(self,x,y,width,height,numOftree,isfired=False,isnight = False):
-# 		self.x = x 
-# 		self.y = y 
-# 		self.width = width
-# 		self.height = height 
-# 		self.numOftree = numOftree
-# 		self.dot = 1
-# 		self.hitbox = (self.x,self.y,self.width,self.height)
-# 		self.hit = pygame.Rect(self.x,self.y,self.width,self.height)
-# 		self.tree = tree
-# 		self.isfired = isfired
-# 		self.isnight = isnight
-# 	def draw_tree(self,win):
-# 		if not self.isfired:
-# 			if not self.isnight:
-# 				self.tree = tree
-# 			else:
-# 				self.tree = tree_night
-# 		else:
-# 			self.tree = tree_cut
-# 		for i in range(self.numOftree):
-# 			if i %2 !=0 :
+class Tree():
+	def __init__(self,x,y,width,height,numOftree,isfired=False,isnight = False):
+		self.x = x 
+		self.y = y 
+		self.width = width
+		self.height = height 
+		self.numOftree = numOftree
+		self.dot = 1
+		self.hitbox = (self.x,self.y,self.width,self.height)
+		self.hit = pygame.Rect(self.x,self.y,self.width,self.height)
+		self.tree = tree
+		self.isfired = isfired
+		self.isnight = isnight
+	def draw_tree(self,win):
+		if not self.isfired:
+			if not self.isnight:
+				self.tree = tree
+			else:
+				self.tree = tree_night
+		else:
+			self.tree = tree_cut
+		for i in range(self.numOftree):
+			if i %2 !=0 :
 
-# 				self.hit = win.blit(pygame.transform.scale(self.tree,(self.width,self.height + i*10*self.dot)),(self.x + (i+1)*25,self.y - i*10*self.dot))
-# 				self.hitbox = (self.x + (i+1)*25,self.y-10*i*self.dot,self.width,self.height + i*10*self.dot)
+				self.hit = win.blit(pygame.transform.scale(self.tree,(self.width,self.height + i*10*self.dot)),(self.x + (i+1)*25,self.y - i*10*self.dot))
+				self.hitbox = (self.x + (i+1)*25,self.y-10*i*self.dot,self.width,self.height + i*10*self.dot)
 				
-# 			else:
-# 				self.hit = win.blit(pygame.transform.scale(self.tree,(self.width,self.height )),(self.x  + (i+1)*25,self.y ))
-# 				self.hitbox = (self.x +(i+1)*25,self.y,self.width,self.height)
+			else:
+				self.hit = win.blit(pygame.transform.scale(self.tree,(self.width,self.height )),(self.x  + (i+1)*25,self.y ))
+				self.hitbox = (self.x +(i+1)*25,self.y,self.width,self.height)
 				
 
 
-# class Bird():
-# 	def __init__(self,x,y,width,height,isfired = False):
-# 		self.x = x
-# 		self.y = y
-# 		self.width = width
-# 		self.height = height
-# 		self.hit = pygame.Rect(self.x,self.y,self.width,self.height)
-# 		self.bird = bird
-# 		self.isfired = isfired
-# 	def draw_bird(self,win):
-# 		if not self.isfired:
-# 			self.bird = bird
-# 		else:
-# 			self.bird = bird_cut
-# 		self.hit = win.blit(pygame.transform.scale(self.bird,(self.width,self.height)),(self.x,self.y))
+class Bird():
+	def __init__(self,x,y,width,height,isfired = False):
+		self.x = x
+		self.y = y
+		self.width = width
+		self.height = height
+		self.hit = pygame.Rect(self.x,self.y,self.width,self.height)
+		self.bird = bird
+		self.isfired = isfired
+	def draw_bird(self,win):
+		if not self.isfired:
+			self.bird = bird
+		else:
+			self.bird = bird_cut
+		self.hit = win.blit(pygame.transform.scale(self.bird,(self.width,self.height)),(self.x,self.y))
 
 
 # class Item():
@@ -509,3 +485,4 @@ def guide_main():
 
 
 pre_main()
+
