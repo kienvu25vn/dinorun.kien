@@ -7,6 +7,8 @@ from background import back_ground
 from item import Item
 from Bullet import bullet
 from Dino import Dino
+from tree import Tree
+
 pygame.init()
 pygame.font.init()
 pygame.mixer.init()
@@ -19,8 +21,8 @@ lazer_sound = pygame.mixer.Sound(os.path.join('music','laze.mp3'))
 bg1 = pygame.image.load(os.path.join('image','background.jpg'))
 guide_bg = pygame.image.load(os.path.join('image','guide_bg.jpg'))
 # night_bg = pygame.image.load(os.path.join('image','night_bg.png'))
-tree = pygame.image.load(os.path.join('image','tree.png'))
-tree_night = pygame.image.load(os.path.join('image','tree_night.png'))
+# tree = pygame.image.load(os.path.join('image','tree.png'))
+# tree_night = pygame.image.load(os.path.join('image','tree_night.png'))
 tree_cut = pygame.image.load(os.path.join('image','tree1.png'))
 bird = pygame.image.load(os.path.join('image','bird.png'))
 bird_cut = pygame.image.load(os.path.join('image','bird_cut.png'))
