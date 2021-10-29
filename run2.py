@@ -8,7 +8,7 @@ from item import Item
 from Bullet import bullet
 from Dino import Dino
 from tree import Tree
-
+from bird import Bird
 pygame.init()
 pygame.font.init()
 pygame.mixer.init()
