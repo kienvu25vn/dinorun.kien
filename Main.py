@@ -253,7 +253,7 @@ def main():   																#Ham chinh cua chuong trinh
 				ITEM.isappear = False
 			      
 			
-		#Ve highscore len giao dien Gameover!
+		#Ve highscore len giao dien display!
 		win.blit(score_text,(600-score_text.get_width()-10,10))
 		if high_score > 0:
 			win.blit(high_score_text,(600-score_text.get_width()-25 - high_score_text.get_width(),10))
