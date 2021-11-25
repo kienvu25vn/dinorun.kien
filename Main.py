@@ -168,7 +168,7 @@ def main():   																#Ham chinh cua chuong trinh
 				pygame.quit()
 				sys.exit()
 			if event.type == pygame.KEYDOWN:		#Xu ly su kien KEYDOWN
-				if event.key == pygame.K_SPACE:     #Khung long nhay
+				if event.key == pygame.K_SPACE and dino.y == 220:     #Khung long nhay
 					jump_sound.play()
 					dino.jump = True
 				if event.key == pygame.K_DOWN :		#Khung long nam
